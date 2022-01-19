@@ -6,55 +6,60 @@ function DataTable({ columns, data }) {
     useTable({ columns, data }, useSortBy)
 
   return (
-    <div className="overflow-x-auto bg-light-light dark:bg-dark-dark p-4 rounded-md">
-      <table {...getTableProps()} className="table-auto w-full border-collapse">
-        <thead className=" sticky top-0">
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="text-xs text-left py-3 px-1"
-                >
-                  {column.render('Header')}
-                  <span>
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <FiChevronUp
-                          aria-label="sorted descending"
-                          className="inline-block"
-                        />
-                      ) : (
-                        <FiChevronDown
-                          aria-label="sorted ascending"
-                          className="inline-block"
-                        />
-                      )
-                    ) : null}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td
-                    {...cell.getCellProps()}
-                    className="text-left py-6 px-1 text-sm"
+    <div className="flex flex-col h-screen">
+      <div className="flex-grow overflow-x-auto">
+        <table
+          {...getTableProps()}
+          className="w-full border-collapse table-auto"
+        >
+          <thead className="">
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(column => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className="text-xs text-left p-3 uppercase sticky top-0 whitespace-nowrap bg-light-light dark:bg-dark-dark"
                   >
-                    {cell.render('Cell')}
-                  </td>
+                    {column.render('Header')}
+                    <span>
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <FiChevronUp
+                            aria-label="sorted descending"
+                            className="inline-block"
+                          />
+                        ) : (
+                          <FiChevronDown
+                            aria-label="sorted ascending"
+                            className="inline-block"
+                          />
+                        )
+                      ) : null}
+                    </span>
+                  </th>
                 ))}
               </tr>
-            )
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()} className="divide-y">
+            {rows.map(row => {
+              prepareRow(row)
+              return (
+                <tr {...row.getRowProps()} className="">
+                  {row.cells.map(cell => (
+                    <td
+                      {...cell.getCellProps()}
+                      className="text-left py-6 px-3 text-sm whitespace-nowrap"
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

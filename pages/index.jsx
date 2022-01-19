@@ -1,6 +1,6 @@
 const numeral = require('numeral')
 // React
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import NextLink from 'next/link'
 // Lib
 import { fetchCurrencies } from '../lib/fetchData'
@@ -14,7 +14,14 @@ const Error = () => (
   </div>
 )
 
-const Home = ({ fetchData, fetchError }) => {
+const Home = ({ fetchData, fetchError, interval }) => {
+  // TODO: maybe refactor
+  const [intervalValue, setIntervalValue] = useState(interval)
+
+  useEffect(() => {
+    setIntervalValue(interval)
+  }, [interval])
+
   const data = useMemo(() => fetchData, [fetchData])
 
   const columns = useMemo(
@@ -33,8 +40,8 @@ const Home = ({ fetchData, fetchError }) => {
         Cell: e => numeral(e.value).format('$0,0.00')
       },
       {
-        Header: '1D Change',
-        accessor: '1d.price_change_pct',
+        Header: `${intervalValue} Change`,
+        accessor: `${intervalValue}.price_change_pct`,
         Cell: e => numeral(e.value).format('0.00%')
       },
       {
@@ -53,24 +60,24 @@ const Home = ({ fetchData, fetchError }) => {
         Cell: e => numeral(e.value).format('($0.00 a)')
       }
     ],
-    []
+    [intervalValue]
   )
 
   return (
     <>
       <section className="py-10">
-        <div className="container">
+        <div className="max-w-app px-5">
           <BigTitle>Cryptocurrency Prices by Market Cap</BigTitle>
         </div>
       </section>
       <section className="py-10">
         {fetchError && (
-          <div className="container">
+          <div className="max-w-app px-5">
             <Error />
           </div>
         )}
         {!fetchError && (
-          <div className="container">
+          <div className="max-w-app px-5">
             <DataTable columns={columns} data={data} />
           </div>
         )}
@@ -79,12 +86,15 @@ const Home = ({ fetchData, fetchError }) => {
   )
 }
 
-export const getServerSideProps = async context => {
-  const { data, error } = await fetchCurrencies()
+export const getServerSideProps = async ({ query }) => {
+  const interval = query.interval ? query.interval : '1d'
+  const { data, error } = await fetchCurrencies(interval)
+
   return {
     props: {
       fetchData: data,
-      fetchError: error
+      fetchError: error,
+      interval: interval
     }
   }
 }

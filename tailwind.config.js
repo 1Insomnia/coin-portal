@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: '20px'
+      padding: '20px',
+      maxWidth: '1400px'
     },
     colors: {
       dark: {
@@ -23,10 +24,24 @@ module.exports = {
       primary: {
         green: '#16c784',
         red: '#ea3943'
+      },
+      table: {
+        divider: {
+          dark: 'rgb(34,37,49)',
+          light: '##eff2f5'
+        }
       }
     },
     extend: {
-      colors: {}
+      maxWidth: {
+        app: '1400px'
+      },
+      backgroundColor: {
+        'pattern-light':
+          'linear-gradient(rgb(248, 250, 253) 0%, rgba(248, 250, 253, 0) 413px)',
+        'pattern-dark':
+          'linear-gradient(rgb(34, 37, 49) 0%, rgba(34, 37, 49, 0) 413px)'
+      }
     }
   },
   plugins: []
