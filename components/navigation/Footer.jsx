@@ -1,7 +1,5 @@
-import { Box } from '@chakra-ui/react'
-
 const Footer = () => {
-  return <Box as="footer">Footer</Box>
+  return <footer>Footer</footer>
 }
 
 export default Footer

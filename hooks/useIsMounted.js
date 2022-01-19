@@ -12,3 +12,5 @@ const useIsMounted = () => {
 
   return { isMounted }
 }
+
+export default useIsMounted

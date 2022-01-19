@@ -1,15 +1,21 @@
-// Chakra
-import { MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { IconButton, useColorMode } from '@chakra-ui/react'
+import useIsMounted from '../../hooks/useIsMounted'
+// React Icons
+import { FiSun, FiMoon } from 'react-icons/fi'
+// Next
+import { useTheme } from 'next-themes'
 
 const ThemeToggle = () => {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { theme, setTheme } = useTheme()
+  const { isMounted } = useIsMounted()
+
+  const handleClick = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
 
   return (
-    <IconButton
-      onClick={toggleColorMode}
-      icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-    ></IconButton>
+    <button onClick={handleClick} aria-label="Toggle Dark Mode" type="button">
+      {isMounted && theme === 'dark' ? <FiSun /> : <FiMoon />}
+    </button>
   )
 }
 

@@ -1,11 +1,9 @@
 const numeral = require('numeral')
 // React
 import { useMemo } from 'react'
+import NextLink from 'next/link'
 // Lib
 import { fetchCurrencies } from '../lib/fetchData'
-// Chakra
-import { Box, Heading } from '@chakra-ui/react'
-import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
 // Components
 import DataTable from '../components/data/DataTable'
 
@@ -20,8 +18,7 @@ const Home = ({ fetchData, fetchError }) => {
       },
       {
         Header: 'Name',
-        accessor: 'name',
-        url: true
+        accessor: 'name'
       },
       {
         Header: 'Price',
@@ -52,24 +49,7 @@ const Home = ({ fetchData, fetchError }) => {
     []
   )
 
-  console.log(fetchData)
-  console.log(fetchError)
-
-  return (
-    <>
-      <Box>
-        <Heading as="h1" textAlign="center" pb={10}>
-          Top Cryptocurrencies by Market Cap
-        </Heading>
-      </Box>
-      <Box>
-        {fetchError && (
-          <Box>An error as occured fetching data. Try reloading the page.</Box>
-        )}
-        {!fetchError && <DataTable columns={columns} data={data} />}
-      </Box>
-    </>
-  )
+  return <></>
 }
 
 export const getServerSideProps = async context => {
