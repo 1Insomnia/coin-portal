@@ -51,7 +51,7 @@ const Home = ({ fetchData, fetchError, interval }) => {
       },
       {
         Header: 'Volume',
-        accessor: '1d.volume',
+        accessor: `${intervalValue}.volume`,
         Cell: e => numeral(e.value).format('($0.00 a)')
       },
       {
@@ -66,18 +66,18 @@ const Home = ({ fetchData, fetchError, interval }) => {
   return (
     <>
       <section className="py-10">
-        <div className="max-w-app px-5">
+        <div className="max-w-app px-5 mx-auto">
           <BigTitle>Cryptocurrency Prices by Market Cap</BigTitle>
         </div>
       </section>
       <section className="py-10">
         {fetchError && (
-          <div className="max-w-app px-5">
+          <div className="max-w-app px-5 mx-auto">
             <Error />
           </div>
         )}
         {!fetchError && (
-          <div className="max-w-app px-5">
+          <div className="max-w-app px-5 mx-auto">
             <DataTable columns={columns} data={data} />
           </div>
         )}

@@ -23,6 +23,9 @@ function DataTable({ columns, data }) {
                     return (
                       <th
                         key={key}
+                        {...column.getHeaderProps(
+                          column.getSortByToggleProps()
+                        )}
                         {...restColumn}
                         className="text-xs text-left p-3 uppercase sticky top-0 whitespace-nowrap bg-light-light dark:bg-dark-dark"
                       >
