@@ -5,11 +5,11 @@ import Footer from '../navigation/Footer'
 
 const Main = ({ children }) => {
   return (
-    <>
+    <div className="relative">
       <Header />
       <main className="min-h-screen">{children}</main>
       <Footer />
-    </>
+    </div>
   )
 }
 
