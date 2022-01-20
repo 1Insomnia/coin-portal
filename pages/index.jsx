@@ -3,7 +3,7 @@ const numeral = require('numeral')
 import { useMemo, useState, useEffect } from 'react'
 import NextLink from 'next/link'
 // Lib
-import { fetchCurrencies } from '../lib/fetchData'
+import { fetchCurrencies, fetchExchangeRates } from '../lib/fetchData'
 // Components
 import DataTable from '../components/data/DataTable'
 import BigTitle from '../components/BigTitle'
@@ -14,15 +14,16 @@ const Error = () => (
   </div>
 )
 
-const Home = ({ fetchData, fetchError, interval }) => {
+const Home = ({ currencies, currenciesError, interval }) => {
   // TODO: maybe refactor
+  // Set State for interval query param
   const [intervalValue, setIntervalValue] = useState(interval)
-
+  // Bind State everytime interval query param is updated
   useEffect(() => {
     setIntervalValue(interval)
   }, [interval])
 
-  const data = useMemo(() => fetchData, [fetchData])
+  const data = useMemo(() => currencies, [currencies])
 
   const columns = useMemo(
     () => [
@@ -71,12 +72,12 @@ const Home = ({ fetchData, fetchError, interval }) => {
         </div>
       </section>
       <section className="py-10">
-        {fetchError && (
+        {currenciesError && (
           <div className="max-w-app px-5 mx-auto">
             <Error />
           </div>
         )}
-        {!fetchError && (
+        {!currenciesError && (
           <div className="max-w-app px-5 mx-auto">
             <DataTable columns={columns} data={data} />
           </div>
@@ -88,12 +89,14 @@ const Home = ({ fetchData, fetchError, interval }) => {
 
 export const getServerSideProps = async ({ query }) => {
   const interval = query.interval ? query.interval : '1d'
-  const { data, error } = await fetchCurrencies(interval)
+  const { data: currencies, error: currenciesError } = await fetchCurrencies(
+    interval
+  )
 
   return {
     props: {
-      fetchData: data,
-      fetchError: error,
+      currencies: currencies,
+      currenciesError: currenciesError,
       interval: interval
     }
   }

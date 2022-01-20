@@ -13,7 +13,7 @@ const Link = ({ href, text }) => {
     <NextLink href={href}>
       <a
         className={cn(
-          active ? 'bg-primary-red text-light' : '',
+          active ? 'bg-blue text-foreground-dark' : '',
           'text-xs px-2 py-1 uppercase rounded-sm'
         )}
       >

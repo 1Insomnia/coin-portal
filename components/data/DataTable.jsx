@@ -6,13 +6,10 @@ function DataTable({ columns, data }) {
     useTable({ columns, data }, useSortBy)
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex-grow overflow-x-auto">
-        <table
-          {...getTableProps()}
-          className="w-full border-collapse table-auto"
-        >
-          <thead>
+    <div className="flex flex-col h-screen-2/3">
+      <div className="flex-grow overflow-x-auto ">
+        <table {...getTableProps()} className="w-full table-auto">
+          <thead className="bg-transparent-light dark:bg-transparent-dark backdrop-blur-md sticky top-0">
             {headerGroups.map(headerGroup => {
               const { key, ...restHeaderGroupProps } =
                 headerGroup.getHeaderGroupProps()
@@ -27,7 +24,7 @@ function DataTable({ columns, data }) {
                           column.getSortByToggleProps()
                         )}
                         {...restColumn}
-                        className="text-xs text-left p-3 uppercase sticky top-0 whitespace-nowrap bg-light-light dark:bg-dark-dark"
+                        className="text-xs text-left p-3 uppercase whitespace-nowrap "
                       >
                         {column.render('Header')}
                         <span>
@@ -52,7 +49,10 @@ function DataTable({ columns, data }) {
               )
             })}
           </thead>
-          <tbody {...getTableBodyProps} className="divide-y">
+          <tbody
+            {...getTableBodyProps}
+            className="divide-y divide-accents-2 dark:divide-accents-7"
+          >
             {rows.map(row => {
               prepareRow(row)
               const { key, ...restRowProps } = row.getRowProps()
