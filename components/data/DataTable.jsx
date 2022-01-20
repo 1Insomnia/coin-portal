@@ -64,7 +64,7 @@ function DataTable({ columns, data }) {
                       <td
                         key={key}
                         {...restCellProps}
-                        className="text-left py-6 px-3 text-sm whitespace-nowrap"
+                        className="text-left py-6 px-3 text-sm whitespace-nowrap uppercase"
                       >
                         {cell.render('Cell')}
                       </td>
